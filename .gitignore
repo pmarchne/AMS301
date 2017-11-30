@@ -2,3 +2,4 @@
 *.o
 eigen/
 benchmark/gmsh-3.0.6-Linux64/
+solver
