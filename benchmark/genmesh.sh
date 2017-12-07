@@ -1,9 +1,9 @@
 #!/bin/bash
 echo "Bash version ${BASH_VERSION}"
 
-tableau=('0.05' '0.025' '0.0125')
+tableau=('0.05' '0.025' '0.0125' '0.00625')
 #h = 0.05 0.025 0.0125
-Nbssdom='4'
+Nbssdom='32'
 
 for i in ${tableau[*]}
 do

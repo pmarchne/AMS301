@@ -30,15 +30,10 @@ void jacobi(SpMatrix& A, Vector& b, Vector& u, Mesh& m, double tol, int maxit)
   Vector Au = A*u;
   exchangeAddInterfMPI(Au, m);
   Vector residu = b - Au;
-  //double residuNorm = sqrt(residu.dot(residu.transpose()));
   double residuNorm = ParScalarProd(residu, residu, m);
   
   Vector residu0 = residu;
-  //exchangeAddInterfMPI(residu0, m);
-  //double residu0Norm = sqrt(residu0.dot(residu0.transpose()));
   double residu0Norm = ParScalarProd(residu0, residu0, m);
-  //double residuNorm0 = 1;
-  //double residuNorm  = tol*residuNorm0 + 2;  // au cas où le tol initial soit négatif ...
   int it = 0;
   while (residuNorm > tol * residu0Norm && it < maxit){
     
@@ -56,15 +51,12 @@ void jacobi(SpMatrix& A, Vector& b, Vector& u, Mesh& m, double tol, int maxit)
     exchangeAddInterfMPI(Au, m);
     residu = b - Au;
     
-    //residu = b - A*u;
-    //exchangeAddInterfMPI(residu, m);
-    //residuNorm = sqrt(residu.dot(residu.transpose()));
     residuNorm = ParScalarProd(residu, residu, m);
     
-    if((it % 10) == 0){
+    /*if((it % 10) == 0){
       if(myRank == 0)
         printf("\r   %i %e \n", it, residuNorm);
-    }
+    }*/
     it++;
   }
   
@@ -81,6 +73,9 @@ void jacobi(SpMatrix& A, Vector& b, Vector& u, Mesh& m, double tol, int maxit)
   
 }
 
+//================================================================================
+// Solution of the system Au=b with Conjugate Gradient
+//================================================================================
 
 void ConjGrad(SpMatrix& A, Vector& b, Vector& u, Mesh& m, double tol, int maxit)
 {
